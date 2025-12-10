@@ -1,16 +1,103 @@
-# React + Vite
+# HRSphere
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+HRSphere is a comprehensive, modern Human Resource Management System (HRMS) designed to streamline workforce management for small to medium-sized enterprises. Built with a focus on user experience and scalability, it automates core HR processes from recruitment to payroll.
 
-Currently, two official plugins are available:
+![HRSphere Dashboard](/public/dashboard-mockup.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+### Core HR
+- **Employee Management**: Centralized database for employee records, documents, and personal details.
+- **Attendance Tracking**: Real-time attendance monitoring with check-in/out functionality.
+- **Leave Management**: Automated leave request workflows and balance tracking.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Financials
+- **Payroll Processing**: Automated salary calculation including tax deductions and allowances.
+- **Expense Tracking**: Manage employee reimbursements and operational expenses.
+- **Asset Management**: Track company assets assigned to employees.
 
-## Expanding the ESLint configuration
+### Talent & Growth
+- **Recruitment (ATS)**: Kanban-style applicant tracking system for managing job candidates.
+- **Performance Reviews**: structured performance appraisal cycles.
+- **Training**: Manage employee training programs and development.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Communication
+- **Announcements**: Company-wide updates and news feed.
+- **Reports**: Detailed analytics and reporting for HR metrics.
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **React.js**: UI library for building interactive interfaces.
+- **Vite**: Next-generation frontend tooling.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **Framer Motion**: Production-ready animation library.
+- **React Router**: Client-side routing.
+- **Lucide React**: Beautiful & consistent icons.
+
+### Backend
+- **Node.js**: JavaScript runtime environment.
+- **Express.js**: Web framework for Node.js.
+- **MongoDB**: NoSQL database for flexible data storage.
+- **Mongoose**: ODM library for MongoDB and Node.js.
+
+## 📦 Installation & Setup
+
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB (Local or Atlas URI)
+
+### Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/arunabha369/HRSphere.git
+   cd HRSphere
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**
+   Create a `.env` file in the root directory and add the following:
+   ```env
+   PORT=5000
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   ```
+
+4. **Start the Backend Server**
+   Open a terminal and run:
+   ```bash
+   node server/index.js
+   ```
+   The server will start on port 5000 (or as defined in .env).
+
+5. **Start the Frontend Development Server**
+   Open a new terminal window and run:
+   ```bash
+   npm run dev
+   ```
+   The application will be available at `http://localhost:5173`.
+
+## 📁 Project Structure
+
+```
+HRSphere/
+├── public/              # Static assets
+├── server/              # Backend source code
+│   ├── models/          # Mongoose schemas
+│   ├── routes/          # API endpoints
+│   ├── middleware/      # Auth and other middleware
+│   └── index.js         # Server entry point
+├── src/                 # Frontend source code
+│   ├── api/             # API client configuration
+│   ├── components/      # Reusable UI components
+│   ├── context/         # React Context (State Management)
+│   ├── layouts/         # Page layouts
+│   ├── pages/           # Application pages
+│   └── main.jsx         # App entry point
+└── package.json         # Project dependencies and scripts
+```

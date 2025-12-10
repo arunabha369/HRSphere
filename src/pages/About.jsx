@@ -60,10 +60,10 @@ const About = () => {
                     <h2 className="text-3xl font-bold text-slate-900 text-center mb-16">Project Journey</h2>
                     <div className="max-w-4xl mx-auto space-y-12 relative before:absolute before:inset-0 before:ml-5 md:before:ml-[50%] before:-translate-x-px md:before:mx-auto before:h-full before:w-0.5 before:bg-slate-200">
                         {[
-                            { year: 'Aug 2024', title: 'Project Inception', desc: 'Identified the need for a modern, simplified HRMS for small businesses.' },
-                            { year: 'Sep 2024', title: 'Requirement Analysis', desc: 'Gathered requirements and designed the system architecture and database schema.' },
-                            { year: 'Oct 2024', title: 'Development Phase', desc: 'Started implementation using React, Tailwind CSS, and modern web technologies.' },
-                            { year: 'Dec 2024', title: 'Final Submission', desc: 'Completed testing and documentation for the final year project submission.' }
+                            { year: 'Sep 2025', title: 'Project Inception', desc: 'Identified the need for a modern, simplified HRMS for small businesses.' },
+                            { year: 'Oct 2025', title: 'Requirement Analysis', desc: 'Gathered requirements and designed the system architecture and database schema.' },
+                            { year: 'Dec 2025', title: 'Development Phase', desc: 'Started implementation using React, Tailwind CSS, and modern web technologies.' },
+                            { year: 'Mar 2026', title: 'Final Submission', desc: 'Completed testing and documentation for the final year project submission.' }
                         ].map((item, index) => (
                             <motion.div
                                 key={index}

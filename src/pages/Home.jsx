@@ -1,4 +1,5 @@
 import React from 'react';
+import TypewriterText from '../components/TypewriterText';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -40,7 +41,12 @@ const Home = () => {
                             🚀 The Future of HR Management
                         </motion.span>
                         <motion.h1 variants={fadeInUp} className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 leading-tight mb-6">
-                            All-in-One <span className="text-gradient">HR System</span> for Modern Teams
+                            <TypewriterText text="All-in-One " delay={0.1} />
+                            <span className="text-gradient">
+                                <TypewriterText text="HR System" delay={0.1} />
+                            </span>
+                            <br className="hidden md:block" />
+                            <TypewriterText text=" for Modern Teams" delay={1.1} />
                         </motion.h1>
                         <motion.p variants={fadeInUp} className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
                             Automate HR workflows, manage employees, simplify payroll, and boost productivity — all in one platform.
