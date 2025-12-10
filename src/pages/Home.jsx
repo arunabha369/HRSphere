@@ -55,9 +55,9 @@ const Home = () => {
                             <Link to="/login" className="w-full sm:w-auto px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg shadow-primary-500/30 flex items-center justify-center gap-2">
                                 Get Started <ArrowRight className="w-5 h-5" />
                             </Link>
-                            <button className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl font-semibold text-lg transition-all shadow-sm">
+                            <Link to="/contact" className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl font-semibold text-lg transition-all shadow-sm flex items-center justify-center">
                                 Request Demo
-                            </button>
+                            </Link>
                         </motion.div>
                     </motion.div>
 
