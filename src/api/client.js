@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: 'http://localhost:5001/api',
+  baseURL: 'https://hrsphere.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
