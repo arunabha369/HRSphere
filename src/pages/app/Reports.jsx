@@ -28,11 +28,11 @@ const Reports = () => {
                         <BarChart className="w-5 h-5 mr-2 text-primary-600" />
                         Headcount Growth
                     </h3>
-                    <div className="h-64 flex items-end justify-between px-4 space-x-2">
+                    <div className="h-64 flex justify-between px-4 space-x-2">
                         {[45, 50, 52, 58, 62, 65, 70, 72, 75, 80, 85, 92].map((value, i) => (
-                            <div key={i} className="w-full flex flex-col items-center group">
+                            <div key={i} className="w-full h-full flex flex-col justify-end items-center group">
                                 <div
-                                    className="w-full bg-primary-100 hover:bg-primary-600 transition-colors rounded-t-sm relative"
+                                    className="w-full bg-primary-500 hover:bg-primary-600 transition-colors rounded-t-sm relative"
                                     style={{ height: `${value}%` }}
                                 >
                                     <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
