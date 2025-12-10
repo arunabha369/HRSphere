@@ -29,8 +29,8 @@ const Dashboard = () => {
     // Mock recent activity based on employees
     const recentActivity = [
         { id: 0, user: user.name || 'You', action: 'joined the team', time: 'Just now' },
-        { id: 1, user: 'Alice Johnson', action: 'requested leave', time: '2 hours ago' },
-        { id: 2, user: 'Bob Smith', action: 'completed onboarding', time: '4 hours ago' },
+        { id: 1, user: 'Ananya Reddy', action: 'requested leave', time: '2 hours ago' },
+        { id: 2, user: 'Rohan Mehta', action: 'completed onboarding', time: '4 hours ago' },
         { id: 3, user: 'System', action: 'processed payroll', time: '1 day ago' },
     ];
 
