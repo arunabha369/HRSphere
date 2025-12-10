@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Features from './pages/Features';
 import Pricing from './pages/Pricing';
@@ -30,6 +31,7 @@ function App() {
   return (
     <EmployeeProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           {/* Marketing Website Routes */}
           <Route path="/" element={

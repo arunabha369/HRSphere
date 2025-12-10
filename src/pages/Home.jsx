@@ -52,7 +52,7 @@ const Home = () => {
                             Automate HR workflows, manage employees, simplify payroll, and boost productivity — all in one platform.
                         </motion.p>
                         <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-                            <Link to="/contact" className="w-full sm:w-auto px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg shadow-primary-500/30 flex items-center justify-center gap-2">
+                            <Link to="/login" className="w-full sm:w-auto px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg shadow-primary-500/30 flex items-center justify-center gap-2">
                                 Get Started <ArrowRight className="w-5 h-5" />
                             </Link>
                             <button className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl font-semibold text-lg transition-all shadow-sm">
@@ -151,23 +151,12 @@ const Home = () => {
                         </div>
                         <div className="lg:w-1/2 relative">
                             <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-blue-600 rounded-2xl transform rotate-3 opacity-20" />
-                            <div className="bg-white p-8 rounded-2xl shadow-xl relative z-10 border border-slate-100">
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-12 h-12 bg-slate-100 rounded-full" />
-                                    <div>
-                                        <div className="h-4 w-32 bg-slate-100 rounded mb-2" />
-                                        <div className="h-3 w-20 bg-slate-100 rounded" />
-                                    </div>
-                                </div>
-                                <div className="space-y-3">
-                                    <div className="h-3 w-full bg-slate-50 rounded" />
-                                    <div className="h-3 w-full bg-slate-50 rounded" />
-                                    <div className="h-3 w-3/4 bg-slate-50 rounded" />
-                                </div>
-                                <div className="mt-8 flex gap-4">
-                                    <div className="h-10 w-24 bg-primary-100 rounded-lg" />
-                                    <div className="h-10 w-24 bg-slate-100 rounded-lg" />
-                                </div>
+                            <div className="relative z-10 rounded-2xl overflow-hidden shadow-xl border border-slate-100">
+                                <img
+                                    src="/why-choose-us.png"
+                                    alt="Team collaboration"
+                                    className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
+                                />
                             </div>
                         </div>
                     </div>

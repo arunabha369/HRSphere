@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Target, Heart, Zap, Globe, Award, Users } from 'lucide-react';
+import { Target, Heart, Zap, Globe, Award, Users, Linkedin, Github, Instagram } from 'lucide-react';
 
 const About = () => {
     return (
@@ -125,6 +125,17 @@ const About = () => {
                             <h3 className="font-bold text-slate-900">Arunabha Banerjee</h3>
                             <p className="text-primary-600 text-sm">Final Year Student</p>
                             <p className="text-slate-500 text-xs mt-2">Computer Science & Business Systems</p>
+                            <div className="flex justify-center gap-4 mt-4 pt-4 border-t border-slate-100">
+                                <a href="https://www.linkedin.com/in/arunabha369/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-[#0077b5] transition-colors">
+                                    <Linkedin className="w-5 h-5" />
+                                </a>
+                                <a href="https://github.com/arunabha369" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-900 transition-colors">
+                                    <Github className="w-5 h-5" />
+                                </a>
+                                <a href="https://www.instagram.com/arunabha_369/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-[#E1306C] transition-colors">
+                                    <Instagram className="w-5 h-5" />
+                                </a>
+                            </div>
                         </motion.div>
                     </div>
                 </div>
