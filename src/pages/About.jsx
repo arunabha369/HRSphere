@@ -115,10 +115,12 @@ const About = () => {
                             whileHover={{ y: -5 }}
                             className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"
                         >
-                            <div className="w-24 h-24 bg-slate-200 rounded-full mx-auto mb-4 overflow-hidden">
-                                <div className="w-full h-full flex items-center justify-center text-slate-400">
-                                    <Users className="w-10 h-10" />
-                                </div>
+                            <div className="w-32 h-32 bg-slate-200 rounded-full mx-auto mb-4 overflow-hidden ring-4 ring-slate-50 shadow-lg">
+                                <img
+                                    src="/arunabha.jpg"
+                                    alt="Arunabha Banerjee"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
                             <h3 className="font-bold text-slate-900">Arunabha Banerjee</h3>
                             <p className="text-primary-600 text-sm">Final Year Student</p>

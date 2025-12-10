@@ -10,11 +10,11 @@ const Recruitment = () => {
     ];
 
     const candidates = [
-        { id: 1, name: 'Alice Johnson', role: 'Frontend Dev', status: 'applied', time: '2h ago' },
-        { id: 2, name: 'Bob Smith', role: 'Product Designer', status: 'screening', time: '1d ago' },
-        { id: 3, name: 'Charlie Brown', role: 'Backend Dev', status: 'interview', time: '3d ago' },
-        { id: 4, name: 'Diana Prince', role: 'HR Manager', status: 'offer', time: '5d ago' },
-        { id: 5, name: 'Evan Wright', role: 'Frontend Dev', status: 'applied', time: '4h ago' },
+        { id: 1, name: 'Aarav Patel', role: 'Frontend Dev', status: 'applied', time: '2h ago' },
+        { id: 2, name: 'Vihaan Sharma', role: 'Product Designer', status: 'screening', time: '1d ago' },
+        { id: 3, name: 'Aditya Verma', role: 'Backend Dev', status: 'interview', time: '3d ago' },
+        { id: 4, name: 'Diya Gupta', role: 'HR Manager', status: 'offer', time: '5d ago' },
+        { id: 5, name: 'Ishaan Kumar', role: 'Frontend Dev', status: 'applied', time: '4h ago' },
     ];
 
     return (
