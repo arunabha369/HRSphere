@@ -1,8 +1,78 @@
-import React, { useState } from 'react';
-import { User, Bell, Lock, Shield, Save } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { User, Bell, Lock, Shield, Save, MapPin, Navigation, Loader2, CheckCircle } from 'lucide-react';
+import client from '../../api/client';
 
 const Settings = () => {
     const [activeTab, setActiveTab] = useState('profile');
+
+    // Geofencing state
+    const [geoForm, setGeoForm] = useState({ name: 'Headquarters', latitude: '', longitude: '', radiusMeters: 100 });
+    const [geoLoading, setGeoLoading] = useState(false);
+    const [geoSaving, setGeoSaving] = useState(false);
+    const [geoSaved, setGeoSaved] = useState(false);
+    const [geoError, setGeoError] = useState(null);
+
+    // Fetch existing office location when Geofencing tab is opened
+    useEffect(() => {
+        if (activeTab === 'geofencing') {
+            fetchOfficeLocation();
+        }
+    }, [activeTab]);
+
+    const fetchOfficeLocation = async () => {
+        setGeoLoading(true);
+        try {
+            const { data } = await client.get('/office-location');
+            setGeoForm({
+                name: data.name || 'Headquarters',
+                latitude: data.latitude || '',
+                longitude: data.longitude || '',
+                radiusMeters: data.radiusMeters || 100,
+            });
+        } catch {
+            // No location configured yet — use defaults
+        } finally {
+            setGeoLoading(false);
+        }
+    };
+
+    const handleGeoSave = async () => {
+        if (!geoForm.latitude || !geoForm.longitude) {
+            setGeoError('Latitude and Longitude are required.');
+            return;
+        }
+        setGeoSaving(true);
+        setGeoError(null);
+        setGeoSaved(false);
+        try {
+            await client.put('/office-location', {
+                name: geoForm.name,
+                latitude: parseFloat(geoForm.latitude),
+                longitude: parseFloat(geoForm.longitude),
+                radiusMeters: parseInt(geoForm.radiusMeters) || 100,
+            });
+            setGeoSaved(true);
+            setTimeout(() => setGeoSaved(false), 3000);
+        } catch (err) {
+            setGeoError(err.response?.data?.message || 'Failed to save office location.');
+        } finally {
+            setGeoSaving(false);
+        }
+    };
+
+    const useCurrentLocation = () => {
+        if (!navigator.geolocation) return;
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                setGeoForm(prev => ({
+                    ...prev,
+                    latitude: pos.coords.latitude.toFixed(6),
+                    longitude: pos.coords.longitude.toFixed(6),
+                }));
+            },
+            () => setGeoError('Could not retrieve your current location.')
+        );
+    };
 
     return (
         <div className="max-w-4xl mx-auto">
@@ -18,6 +88,7 @@ const Settings = () => {
                             { id: 'notifications', label: 'Notifications', icon: Bell },
                             { id: 'security', label: 'Security', icon: Lock },
                             { id: 'privacy', label: 'Privacy', icon: Shield },
+                            { id: 'geofencing', label: 'Geofencing', icon: MapPin },
                         ].map((item) => (
                             <button
                                 key={item.id}
@@ -143,11 +214,142 @@ const Settings = () => {
                         </div>
                     )}
 
+                    {activeTab === 'geofencing' && (
+                        <div className="space-y-6">
+                            <div>
+                                <h2 className="text-lg font-bold text-slate-900 mb-1 flex items-center gap-2">
+                                    <MapPin className="w-5 h-5 text-primary-600" />
+                                    Geofencing Configuration
+                                </h2>
+                                <p className="text-sm text-slate-500">
+                                    Set the office location and radius for GPS-verified attendance check-ins.
+                                </p>
+                            </div>
+
+                            {geoLoading ? (
+                                <div className="flex items-center justify-center py-12">
+                                    <Loader2 className="w-6 h-6 animate-spin text-primary-500" />
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                        <p className="text-sm text-blue-700">
+                                            <strong>How it works:</strong> Employees must share their GPS location when checking in or out. 
+                                            If they're outside the configured radius, the check-in is still recorded but flagged for review.
+                                        </p>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">Office Name</label>
+                                            <input
+                                                type="text"
+                                                value={geoForm.name}
+                                                onChange={(e) => setGeoForm(prev => ({ ...prev, name: e.target.value }))}
+                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
+                                                placeholder="e.g. Headquarters"
+                                            />
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-700 mb-1">Latitude</label>
+                                                <input
+                                                    type="number"
+                                                    step="any"
+                                                    value={geoForm.latitude}
+                                                    onChange={(e) => setGeoForm(prev => ({ ...prev, latitude: e.target.value }))}
+                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none font-mono"
+                                                    placeholder="e.g. 22.5726"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-700 mb-1">Longitude</label>
+                                                <input
+                                                    type="number"
+                                                    step="any"
+                                                    value={geoForm.longitude}
+                                                    onChange={(e) => setGeoForm(prev => ({ ...prev, longitude: e.target.value }))}
+                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none font-mono"
+                                                    placeholder="e.g. 88.3639"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            onClick={useCurrentLocation}
+                                            className="flex items-center gap-2 text-sm text-primary-600 hover:text-primary-700 font-medium"
+                                        >
+                                            <Navigation className="w-4 h-4" />
+                                            Use my current location
+                                        </button>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">Allowed Radius (meters)</label>
+                                            <input
+                                                type="number"
+                                                value={geoForm.radiusMeters}
+                                                onChange={(e) => setGeoForm(prev => ({ ...prev, radiusMeters: e.target.value }))}
+                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
+                                                placeholder="100"
+                                            />
+                                            <p className="text-xs text-slate-400 mt-1">
+                                                Employees within this radius of the office coordinates will be marked as "within zone".
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Preview */}
+                                    {geoForm.latitude && geoForm.longitude && (
+                                        <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                                            <h4 className="text-sm font-semibold text-slate-700 mb-2">Preview</h4>
+                                            <div className="grid grid-cols-3 gap-4 text-center">
+                                                <div>
+                                                    <p className="text-xs text-slate-400 uppercase">Latitude</p>
+                                                    <p className="font-mono text-sm text-slate-900">{parseFloat(geoForm.latitude).toFixed(6)}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-xs text-slate-400 uppercase">Longitude</p>
+                                                    <p className="font-mono text-sm text-slate-900">{parseFloat(geoForm.longitude).toFixed(6)}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-xs text-slate-400 uppercase">Radius</p>
+                                                    <p className="font-mono text-sm text-slate-900">{geoForm.radiusMeters}m</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {geoError && (
+                                        <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+                                            {geoError}
+                                        </div>
+                                    )}
+
+                                    {geoSaved && (
+                                        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-sm text-emerald-700 flex items-center gap-2">
+                                            <CheckCircle className="w-4 h-4" />
+                                            Office location saved successfully!
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    )}
+
                     {/* Footer Actions */}
                     <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
-                        <button className="flex items-center space-x-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg font-medium transition-all shadow-lg shadow-primary-500/30">
-                            <Save className="w-4 h-4" />
-                            <span>Save Changes</span>
+                        <button
+                            onClick={activeTab === 'geofencing' ? handleGeoSave : undefined}
+                            disabled={activeTab === 'geofencing' && geoSaving}
+                            className="flex items-center space-x-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg font-medium transition-all shadow-lg shadow-primary-500/30 disabled:opacity-50"
+                        >
+                            {geoSaving ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                                <Save className="w-4 h-4" />
+                            )}
+                            <span>{geoSaving ? 'Saving...' : 'Save Changes'}</span>
                         </button>
                     </div>
                 </div>

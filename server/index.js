@@ -11,6 +11,7 @@ import assetRoutes from './routes/assets.js';
 import expenseRoutes from './routes/expenses.js';
 import recruitmentRoutes from './routes/recruitment.js';
 import announcementRoutes from './routes/announcements.js';
+import officeLocationRoutes from './routes/officeLocation.js';
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.use('/api/assets', assetRoutes);
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/recruitment', recruitmentRoutes);
 app.use('/api/announcements', announcementRoutes);
+app.use('/api/office-location', officeLocationRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
