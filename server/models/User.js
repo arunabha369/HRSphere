@@ -6,6 +6,15 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['Admin', 'HR', 'Employee'], default: 'Employee' },
+  bio: { type: String, default: 'Employee at HRSphere' },
+  avatarUrl: { type: String },
+  preferences: {
+    emailNotifications: { type: Boolean, default: true },
+    pushNotifications: { type: Boolean, default: true },
+    weeklyDigest: { type: Boolean, default: true },
+    newEmployeeAlerts: { type: Boolean, default: true },
+    twoFactorAuth: { type: Boolean, default: false }
+  },
   createdAt: { type: Date, default: Date.now },
 });
 
