@@ -36,12 +36,25 @@ router.get('/:id', protect, async (req, res) => {
 // @route   POST /api/employees
 // @access  Private/Admin
 router.post('/', protect, admin, async (req, res) => {
-  const { employeeId, name, role, department, email, phone, joinDate, salary, address } = req.body;
+  const { name, role, department, email, phone, joinDate, salary, address } = req.body;
+  let { employeeId } = req.body;
 
   try {
     const employeeExists = await Employee.findOne({ email });
     if (employeeExists) {
       return res.status(400).json({ message: 'Employee already exists' });
+    }
+    
+    // Auto-generate employeeId if not provided from the frontend
+    if (!employeeId) {
+        const lastEmp = await Employee.findOne().sort({ createdAt: -1 });
+        if (lastEmp && lastEmp.employeeId && lastEmp.employeeId.startsWith('EMP')) {
+            const lastNum = parseInt(lastEmp.employeeId.slice(3)) || 0;
+            employeeId = `EMP${String(lastNum + 1).padStart(3, '0')}`;
+        } else {
+            const count = await Employee.countDocuments();
+            employeeId = `EMP${String(count + 1).padStart(3, '0')}`;
+        }
     }
 
     const employee = await Employee.create({

@@ -7,7 +7,6 @@ const EmployeeList = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
-        employeeId: '',
         name: '',
         role: '',
         department: '',
@@ -28,7 +27,7 @@ const EmployeeList = () => {
         e.preventDefault();
         await addEmployee({ ...formData, salary: Number(formData.salary) });
         setIsModalOpen(false);
-        setFormData({ employeeId: '', name: '', role: '', department: '', email: '', phone: '', joinDate: '', salary: '', status: 'Active' });
+        setFormData({ name: '', role: '', department: '', email: '', phone: '', joinDate: '', salary: '', status: 'Active' });
     };
 
     return (
@@ -155,28 +154,15 @@ const EmployeeList = () => {
                                 </div>
                                 <form onSubmit={handleSubmit}>
                                     <div className="space-y-4">
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                                <label className="block text-sm font-medium text-slate-700 mb-1">Employee ID</label>
-                                                <input
-                                                    required
-                                                    type="text"
-                                                    placeholder="e.g. EMP001"
-                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
-                                                    value={formData.employeeId}
-                                                    onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
-                                                <input
-                                                    required
-                                                    type="text"
-                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
-                                                    value={formData.name}
-                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                />
-                                            </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                                            <input
+                                                required
+                                                type="text"
+                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
+                                                value={formData.name}
+                                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                            />
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div>
