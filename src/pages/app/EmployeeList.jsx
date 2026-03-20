@@ -7,10 +7,14 @@ const EmployeeList = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
+        employeeId: '',
         name: '',
         role: '',
         department: '',
         email: '',
+        phone: '',
+        joinDate: '',
+        salary: '',
         status: 'Active'
     });
 
@@ -20,11 +24,11 @@ const EmployeeList = () => {
         employee.department.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        addEmployee(formData);
+        await addEmployee({ ...formData, salary: Number(formData.salary) });
         setIsModalOpen(false);
-        setFormData({ name: '', role: '', department: '', email: '', status: 'Active' });
+        setFormData({ employeeId: '', name: '', role: '', department: '', email: '', phone: '', joinDate: '', salary: '', status: 'Active' });
     };
 
     return (
@@ -151,25 +155,50 @@ const EmployeeList = () => {
                                 </div>
                                 <form onSubmit={handleSubmit}>
                                     <div className="space-y-4">
-                                        <div>
-                                            <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
-                                            <input
-                                                required
-                                                type="text"
-                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
-                                                value={formData.name}
-                                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            />
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-700 mb-1">Employee ID</label>
+                                                <input
+                                                    required
+                                                    type="text"
+                                                    placeholder="e.g. EMP001"
+                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
+                                                    value={formData.employeeId}
+                                                    onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                                                <input
+                                                    required
+                                                    type="text"
+                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
+                                                    value={formData.name}
+                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                                />
+                                            </div>
                                         </div>
-                                        <div>
-                                            <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                                            <input
-                                                required
-                                                type="email"
-                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
-                                                value={formData.email}
-                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            />
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                                <input
+                                                    required
+                                                    type="email"
+                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
+                                                    value={formData.email}
+                                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
+                                                <input
+                                                    required
+                                                    type="tel"
+                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
+                                                    value={formData.phone}
+                                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                                />
+                                            </div>
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div>
@@ -185,6 +214,7 @@ const EmployeeList = () => {
                                             <div>
                                                 <label className="block text-sm font-medium text-slate-700 mb-1">Department</label>
                                                 <select
+                                                    required
                                                     className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
                                                     value={formData.department}
                                                     onChange={(e) => setFormData({ ...formData, department: e.target.value })}
@@ -196,6 +226,28 @@ const EmployeeList = () => {
                                                     <option value="Marketing">Marketing</option>
                                                     <option value="HR">HR</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-700 mb-1">Join Date</label>
+                                                <input
+                                                    required
+                                                    type="date"
+                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
+                                                    value={formData.joinDate}
+                                                    onChange={(e) => setFormData({ ...formData, joinDate: e.target.value })}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-slate-700 mb-1">Salary</label>
+                                                <input
+                                                    required
+                                                    type="number"
+                                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 outline-none"
+                                                    value={formData.salary}
+                                                    onChange={(e) => setFormData({ ...formData, salary: e.target.value })}
+                                                />
                                             </div>
                                         </div>
                                     </div>
