@@ -18,8 +18,8 @@ router.get('/', protect, async (req, res) => {
 
 // @desc    Add new candidate
 // @route   POST /api/recruitment
-// @access  Private
-router.post('/', protect, async (req, res) => {
+// @access  Private/Admin
+router.post('/', protect, admin, async (req, res) => {
   const { name, role, email, phone, resumeUrl } = req.body;
 
   try {
@@ -39,8 +39,8 @@ router.post('/', protect, async (req, res) => {
 
 // @desc    Update candidate stage
 // @route   PUT /api/recruitment/:id
-// @access  Private
-router.put('/:id', protect, async (req, res) => {
+// @access  Private/Admin
+router.put('/:id', protect, admin, async (req, res) => {
   const { stage, notes } = req.body;
 
   try {

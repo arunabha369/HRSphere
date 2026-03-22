@@ -6,6 +6,9 @@ const Payroll = () => {
     const [payrolls, setPayrolls] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const isAdminOrHR = user.role === 'Admin' || user.role === 'HR';
+
     useEffect(() => {
         fetchPayrolls();
     }, []);
@@ -36,10 +39,12 @@ const Payroll = () => {
                     <h1 className="text-2xl font-bold text-slate-900">Payroll</h1>
                     <p className="text-slate-500">Manage salaries and view payslips.</p>
                 </div>
-                <button className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center">
-                    <DollarSign className="w-4 h-4 mr-2" />
-                    Process Payroll
-                </button>
+                {isAdminOrHR && (
+                    <button className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center">
+                        <DollarSign className="w-4 h-4 mr-2" />
+                        Process Payroll
+                    </button>
+                )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

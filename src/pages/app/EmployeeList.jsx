@@ -4,6 +4,8 @@ import { Search, Plus, Filter, MoreVertical, Edit2, Trash2, X } from 'lucide-rea
 
 const EmployeeList = () => {
     const { employees, addEmployee, deleteEmployee } = useEmployees();
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const isAdminOrHR = user.role === 'Admin' || user.role === 'HR';
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
@@ -38,13 +40,15 @@ const EmployeeList = () => {
                     <h1 className="text-2xl font-bold text-slate-900">Employees</h1>
                     <p className="text-slate-500">Manage your team members and their account permissions.</p>
                 </div>
-                <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="flex items-center space-x-2 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg shadow-primary-500/30"
-                >
-                    <Plus className="w-5 h-5" />
-                    <span>Add Employee</span>
-                </button>
+                {isAdminOrHR && (
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="flex items-center space-x-2 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg shadow-primary-500/30"
+                    >
+                        <Plus className="w-5 h-5" />
+                        <span>Add Employee</span>
+                    </button>
+                )}
             </div>
 
             {/* Filters & Search */}
@@ -78,7 +82,7 @@ const EmployeeList = () => {
                                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Department</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Joined</th>
-                                <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                                {isAdminOrHR && <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>}
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-slate-200">
@@ -114,19 +118,21 @@ const EmployeeList = () => {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                                         {employee.joinDate}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div className="flex items-center justify-end space-x-2">
-                                            <button className="text-slate-400 hover:text-primary-600 transition-colors">
-                                                <Edit2 className="w-4 h-4" />
-                                            </button>
-                                            <button
-                                                onClick={() => deleteEmployee(employee.id)}
-                                                className="text-slate-400 hover:text-red-600 transition-colors"
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </button>
-                                        </div>
-                                    </td>
+                                    {isAdminOrHR && (
+                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <div className="flex items-center justify-end space-x-2">
+                                                <button className="text-slate-400 hover:text-primary-600 transition-colors">
+                                                    <Edit2 className="w-4 h-4" />
+                                                </button>
+                                                <button
+                                                    onClick={() => deleteEmployee(employee.id)}
+                                                    className="text-slate-400 hover:text-red-600 transition-colors"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>

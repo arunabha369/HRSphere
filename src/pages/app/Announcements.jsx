@@ -10,6 +10,7 @@ const Announcements = () => {
     const [submitting, setSubmitting] = useState(false);
 
     const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const isAdminOrHR = user.role === 'Admin' || user.role === 'HR';
 
     useEffect(() => { fetchPosts(); }, []);
 
@@ -62,40 +63,42 @@ const Announcements = () => {
                 <p className="text-slate-500">Stay updated with the latest company news.</p>
             </div>
 
-            {/* Create Post */}
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
-                <div className="flex gap-4">
-                    <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold flex-shrink-0">
-                        {user.name ? user.name.charAt(0) : 'U'}
+            {/* Create Post — Admin/HR only */}
+            {isAdminOrHR && (
+                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                    <div className="flex gap-4">
+                        <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold flex-shrink-0">
+                            {user.name ? user.name.charAt(0) : 'U'}
+                        </div>
+                        <div className="flex-1 space-y-2">
+                            <input
+                                type="text"
+                                placeholder="Announcement title..."
+                                value={postTitle}
+                                onChange={(e) => setPostTitle(e.target.value)}
+                                className="w-full bg-slate-50 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 text-sm font-medium"
+                            />
+                            <textarea
+                                placeholder="Share an update with the team..."
+                                value={postContent}
+                                onChange={(e) => setPostContent(e.target.value)}
+                                rows="2"
+                                className="w-full bg-slate-50 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 text-sm resize-none"
+                            />
+                        </div>
                     </div>
-                    <div className="flex-1 space-y-2">
-                        <input
-                            type="text"
-                            placeholder="Announcement title..."
-                            value={postTitle}
-                            onChange={(e) => setPostTitle(e.target.value)}
-                            className="w-full bg-slate-50 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 text-sm font-medium"
-                        />
-                        <textarea
-                            placeholder="Share an update with the team..."
-                            value={postContent}
-                            onChange={(e) => setPostContent(e.target.value)}
-                            rows="2"
-                            className="w-full bg-slate-50 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary-500 text-sm resize-none"
-                        />
+                    <div className="flex justify-end">
+                        <button
+                            onClick={handlePost}
+                            disabled={submitting || !postTitle.trim() || !postContent.trim()}
+                            className="bg-primary-600 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-primary-700 disabled:opacity-50 flex items-center"
+                        >
+                            {submitting && <Loader2 className="w-3 h-3 animate-spin mr-1" />}
+                            Post
+                        </button>
                     </div>
                 </div>
-                <div className="flex justify-end">
-                    <button
-                        onClick={handlePost}
-                        disabled={submitting || !postTitle.trim() || !postContent.trim()}
-                        className="bg-primary-600 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-primary-700 disabled:opacity-50 flex items-center"
-                    >
-                        {submitting && <Loader2 className="w-3 h-3 animate-spin mr-1" />}
-                        Post
-                    </button>
-                </div>
-            </div>
+            )}
 
             {/* Feed */}
             {loading ? (

@@ -159,11 +159,13 @@ const Training = () => {
                         <Award className="w-5 h-5 text-white" />
                         <span className="font-bold text-white">{totalXp.toLocaleString()} XP</span>
                     </div>
-                    <button onClick={() => setIsCreateOpen(true)}
-                        className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-xl font-medium transition-colors flex items-center gap-2 shadow-sm">
-                        <Plus className="w-4 h-4" />
-                        Add Course
-                    </button>
+                    {(user.role === 'Admin' || user.role === 'HR') && (
+                        <button onClick={() => setIsCreateOpen(true)}
+                            className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-xl font-medium transition-colors flex items-center gap-2 shadow-sm">
+                            <Plus className="w-4 h-4" />
+                            Add Course
+                        </button>
+                    )}
                 </div>
             </div>
 

@@ -28,18 +28,20 @@ const AppLayout = () => {
         { icon: Users, label: 'Employees', path: '/app/employees' },
         { icon: Calendar, label: 'Attendance', path: '/app/attendance' },
         { icon: Coffee, label: 'Leave', path: '/app/leave' },
-        { icon: CreditCard, label: 'Payroll', path: '/app/payroll' },
+        { icon: CreditCard, label: 'Payroll', path: '/app/payroll', roles: ['Admin', 'HR'] },
         { icon: TrendingUp, label: 'Performance', path: '/app/performance' },
-        { icon: UserPlus, label: 'Recruitment', path: '/app/recruitment' },
+        { icon: UserPlus, label: 'Recruitment', path: '/app/recruitment', roles: ['Admin', 'HR'] },
         { icon: Monitor, label: 'Assets', path: '/app/assets' },
         { icon: Receipt, label: 'Expenses', path: '/app/expenses' },
         { icon: BookOpen, label: 'Training', path: '/app/training' },
         { icon: Megaphone, label: 'Announcements', path: '/app/announcements' },
-        { icon: BarChart, label: 'Reports', path: '/app/reports' },
+        { icon: BarChart, label: 'Reports', path: '/app/reports', roles: ['Admin', 'HR'] },
         { icon: Settings, label: 'Settings', path: '/app/settings' },
     ];
 
     const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const userRole = user.role || 'Employee';
+    const visibleNavItems = navItems.filter(item => !item.roles || item.roles.includes(userRole));
 
     return (
         <div className="min-h-screen bg-slate-50 flex">
@@ -61,7 +63,7 @@ const AppLayout = () => {
 
                     {/* Nav Items */}
                     <div className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
-                        {navItems.map((item) => (
+                        {visibleNavItems.map((item) => (
                             <SidebarItem
                                 key={item.path}
                                 {...item}

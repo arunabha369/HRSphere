@@ -12,6 +12,9 @@ const Assets = () => {
     const [submitting, setSubmitting] = useState(false);
     const [formData, setFormData] = useState({ assetId: '', name: '', type: 'Laptop', purchaseDate: '', value: '' });
 
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const isAdminOrHR = user.role === 'Admin' || user.role === 'HR';
+
     useEffect(() => { fetchAssets(); }, []);
 
     const fetchAssets = async () => {
@@ -66,10 +69,12 @@ const Assets = () => {
                     <h1 className="text-2xl font-bold text-slate-900">Asset Management</h1>
                     <p className="text-slate-500">Track company assets and assignments.</p>
                 </div>
-                <button onClick={() => setIsModalOpen(true)} className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Asset
-                </button>
+                {isAdminOrHR && (
+                    <button onClick={() => setIsModalOpen(true)} className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add Asset
+                    </button>
+                )}
             </div>
 
             {/* Filters */}
