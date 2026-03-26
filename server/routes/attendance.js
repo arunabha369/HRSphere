@@ -28,14 +28,33 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
 // @access  Private
 router.get('/', protect, async (req, res) => {
   try {
-    const attendance = await Attendance.find({}).populate('employee', 'name department');
+    const attendance = await Attendance.find({}).populate('employee', 'name role');
     res.json(attendance);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// @desc    Get today's attendance for a specific employee
+// @desc    Get today's attendance for the logged-in user
+// @route   GET /api/attendance/today
+// @access  Private
+router.get('/today', protect, async (req, res) => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const attendance = await Attendance.findOne({
+      employee: req.user._id,
+      date: { $gte: today },
+    });
+
+    res.json(attendance || null);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// @desc    Get today's attendance for a specific employee (backward compat)
 // @route   GET /api/attendance/today/:employeeId
 // @access  Private
 router.get('/today/:employeeId', protect, async (req, res) => {
@@ -54,7 +73,22 @@ router.get('/today/:employeeId', protect, async (req, res) => {
   }
 });
 
-// @desc    Get attendance history for a specific employee
+// @desc    Get attendance history for the logged-in user
+// @route   GET /api/attendance/history
+// @access  Private
+router.get('/history', protect, async (req, res) => {
+  try {
+    const history = await Attendance.find({ employee: req.user._id })
+      .sort({ date: -1 })
+      .limit(30);
+
+    res.json(history);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// @desc    Get attendance history for a specific employee (backward compat)
 // @route   GET /api/attendance/history/:employeeId
 // @access  Private
 router.get('/history/:employeeId', protect, async (req, res) => {
@@ -73,7 +107,10 @@ router.get('/history/:employeeId', protect, async (req, res) => {
 // @route   POST /api/attendance/mark
 // @access  Private
 router.post('/mark', protect, async (req, res) => {
-  const { employeeId, type, time, latitude, longitude } = req.body;
+  const { type, time, latitude, longitude } = req.body;
+
+  // Use the authenticated user's ID — not a client-sent employeeId
+  const employeeId = req.user._id;
 
   if (latitude == null || longitude == null) {
     return res.status(400).json({ message: 'Location coordinates are required for attendance' });
