@@ -48,10 +48,8 @@ const Attendance = () => {
     // Fetch office location, today's record, and history on mount
     useEffect(() => {
         fetchOfficeLocation();
-        if (user._id || user.id) {
-            fetchTodayRecord();
-            fetchHistory();
-        }
+        fetchTodayRecord();
+        fetchHistory();
     }, []);
 
     const fetchOfficeLocation = async () => {
@@ -66,8 +64,7 @@ const Attendance = () => {
 
     const fetchTodayRecord = async () => {
         try {
-            const empId = user._id || user.id;
-            const { data } = await client.get(`/attendance/today/${empId}`);
+            const { data } = await client.get('/attendance/today');
             setTodayRecord(data);
         } catch {
             setTodayRecord(null);
@@ -77,8 +74,7 @@ const Attendance = () => {
     const fetchHistory = async () => {
         setLoading(true);
         try {
-            const empId = user._id || user.id;
-            const { data } = await client.get(`/attendance/history/${empId}`);
+            const { data } = await client.get('/attendance/history');
             setHistory(data || []);
         } catch {
             setHistory([]);
@@ -146,19 +142,12 @@ const Attendance = () => {
             return;
         }
 
-        const empId = user._id || user.id;
-        if (!empId) {
-            setError('User session not found. Please log in again.');
-            return;
-        }
-
         const type = isCheckedIn ? 'checkOut' : 'checkIn';
         setMarkLoading(true);
         setError(null);
 
         try {
             const { data } = await client.post('/attendance/mark', {
-                employeeId: empId,
                 type,
                 latitude: userCoords.latitude,
                 longitude: userCoords.longitude,
