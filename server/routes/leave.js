@@ -9,7 +9,7 @@ const router = express.Router();
 // @access  Private
 router.get('/', protect, async (req, res) => {
   try {
-    const leaves = await Leave.find({}).populate('employee', 'name department');
+    const leaves = await Leave.find({}).populate('employee', 'name role').sort({ appliedOn: -1 });
     res.json(leaves);
   } catch (error) {
     res.status(500).json({ message: error.message });
