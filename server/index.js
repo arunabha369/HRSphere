@@ -13,6 +13,7 @@ import recruitmentRoutes from './routes/recruitment.js';
 import announcementRoutes from './routes/announcements.js';
 import officeLocationRoutes from './routes/officeLocation.js';
 import trainingRoutes from './routes/training.js';
+import performanceRoutes from './routes/performance.js';
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ app.use('/api/recruitment', recruitmentRoutes);
 app.use('/api/announcements', announcementRoutes);
 app.use('/api/office-location', officeLocationRoutes);
 app.use('/api/training', trainingRoutes);
+app.use('/api/performance', performanceRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
