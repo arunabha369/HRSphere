@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
     Users, Calendar, Clock, CreditCard, TrendingUp, Shield,
-    CheckCircle, ArrowRight, Star, Building
+    CheckCircle, ArrowRight
 } from 'lucide-react';
 
 const fadeInUp = {
@@ -78,19 +78,6 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Trusted By */}
-            <section className="py-10 border-y border-slate-100 bg-slate-50/50">
-                <div className="container mx-auto px-4 text-center">
-                    <p className="text-sm font-medium text-slate-500 mb-6 uppercase tracking-wider">Trusted by innovative companies</p>
-                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                        {['Acme Corp', 'GlobalTech', 'Nebula', 'Circle', 'FoxRun'].map((company) => (
-                            <div key={company} className="flex items-center gap-2 text-xl font-bold text-slate-800">
-                                <Building className="w-6 h-6" /> {company}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
             {/* Feature Highlights */}
             <section className="py-24 bg-white">
@@ -163,32 +150,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Testimonials */}
-            <section className="py-24 bg-white">
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-16">Loved by HR teams worldwide</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {[
-                            { name: 'Sarah Johnson', role: 'HR Director, TechFlow', text: 'HRSphere transformed how we manage our remote team. The onboarding process is now 10x faster.' },
-                            { name: 'Michael Chen', role: 'CEO, StartUp Inc', text: 'The best investment we made this year. It saves us countless hours on payroll and compliance.' },
-                            { name: 'Emily Davis', role: 'People Ops, CreativeStudio', text: 'Beautiful interface and incredibly intuitive. Our employees actually love using it!' },
-                        ].map((testimonial, index) => (
-                            <div key={index} className="bg-slate-50 p-8 rounded-2xl border border-slate-100">
-                                <div className="flex justify-center mb-4">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                                    ))}
-                                </div>
-                                <p className="text-slate-700 italic mb-6">"{testimonial.text}"</p>
-                                <div>
-                                    <h4 className="font-bold text-slate-900">{testimonial.name}</h4>
-                                    <p className="text-sm text-slate-500">{testimonial.role}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+
 
             {/* Pricing Teaser */}
             <section className="py-24 bg-primary-900 text-white relative overflow-hidden">
